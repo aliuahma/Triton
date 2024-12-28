@@ -18,7 +18,15 @@ impl InputHandler {
     pub fn update(&mut self, rl: &RaylibHandle, camera_controller: &mut CameraController) {
         self.previous_mouse_position = self.current_mouse_position;
         self.current_mouse_position = rl.get_mouse_position();
+        let mouse_delta: Vector2 = self.current_mouse_position - self.previous_mouse_position;
+        let scroll_delta: f32 = rl.get_mouse_wheel_move();
 
-        camera_controller.zoom(rl.get_mouse_wheel_move());
+        if scroll_delta != 0.0 {
+            camera_controller.zoom(scroll_delta);
+        }
+
+        if rl.is_mouse_button_down(MouseButton::MOUSE_BUTTON_MIDDLE) && rl.is_key_down(KeyboardKey::KEY_LEFT_SHIFT) && mouse_delta != Vector2::zero() {
+            camera_controller.orbit(mouse_delta);
+        }
     }
 }
