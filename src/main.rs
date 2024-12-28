@@ -16,7 +16,7 @@ fn main() {
     let mut input_handler: input_handler::InputHandler = input_handler::InputHandler::new();
 
     while !rl.window_should_close() {
-        input_handler.update(&rl);
+        input_handler.update(&rl, &mut camera_controller);
         let mut d: RaylibDrawHandle = rl.begin_drawing(&thread);
         d.clear_background(Color::RAYWHITE);
 
