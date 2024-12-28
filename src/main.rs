@@ -20,8 +20,6 @@ fn main() {
         let mut d: RaylibDrawHandle = rl.begin_drawing(&thread);
         d.clear_background(Color::RAYWHITE);
 
-        camera_controller.update();
-
         {
             let mut d_3d = d.begin_mode3D(camera_controller.camera);
             d_3d.draw_grid(10, 1.0);
@@ -31,6 +29,5 @@ fn main() {
 
         //d.draw_text("DRIVE", 10, 40, 20, Color::BLACK);
         d.draw_fps(10, 10);
-        d.draw_text(&format!("Scroll: {}", input_handler.scroll() * 100.0), 10, 40, 20, Color::BLACK);
     }
 }

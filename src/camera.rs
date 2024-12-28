@@ -19,14 +19,10 @@ impl CameraController {
 
         Self {
             camera,
-            zoom_min: 1.0,
-            zoom_max: 10.0,
-            zoom_speed: 0.1,
+            zoom_min: 2.0,
+            zoom_max: 20.0,
+            zoom_speed: 0.5,
         }
-    }
-
-    pub fn update(&mut self) {
-
     }
 
     pub fn zoom(&mut self, delta: f32) {
