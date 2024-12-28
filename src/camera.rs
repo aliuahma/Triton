@@ -32,4 +32,8 @@ impl CameraController {
         l = l.min(self.zoom_max).max(self.zoom_min);                 // clamp zoom distance
         self.camera.position = self.camera.target + r * l;
     }
+
+    pub fn orbit(&mut self, delta: Vector2) {
+        
+    }
 }
