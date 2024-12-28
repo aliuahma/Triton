@@ -11,6 +11,7 @@ pub struct CameraController {
     phi_max: f32,
     theta: f32, 
     orbit_sensitivity: f32,
+    pan_sensitivity: f32,
 }
 
 impl CameraController {
@@ -32,6 +33,7 @@ impl CameraController {
             phi_max: std::f32::consts::FRAC_PI_4 - 0.00001,
             theta: 0.0,
             orbit_sensitivity: 0.005,
+            pan_sensitivity: 0.01,
         }
     }
 
@@ -58,5 +60,18 @@ impl CameraController {
         self.camera.position = self.camera.target + Vector3::new(x, y, z);
 
         self.camera.up = Vector3::new(0.0, 1.0, 0.0);
+    }
+
+    pub fn pan(&mut self, delta: Vector2) {
+        let r_norm: Vector3 = (self.camera.target - self.camera.position).cross(self.camera.up).normalized();
+        let u_norm: Vector3 = self.camera.up.normalized();
+
+        let distance: f32 = (self.camera.target - self.camera.position).length();
+        let viewport_height: f32 = 2.0 * distance * (self.camera.fovy.to_radians() / 2.0).tan();
+        let scale_factor: f32 = distance / viewport_height;
+
+        let delta_world: Vector3 = r_norm * -delta.x * scale_factor * self.pan_sensitivity + u_norm * delta.y * scale_factor * self.pan_sensitivity;
+        self.camera.position += delta_world;
+        self.camera.target += delta_world;
     }
 }
