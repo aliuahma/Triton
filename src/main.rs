@@ -1,5 +1,6 @@
 // main.rs
 mod camera;
+mod input_handler;
 
 use raylib::prelude::*;
 
@@ -12,9 +13,11 @@ fn main() {
     rl.set_target_fps(1000);
 
     let mut camera_controller: camera::CameraController = camera::CameraController::new();
+    let mut input_handler: input_handler::InputHandler = input_handler::InputHandler::new();
 
     while !rl.window_should_close() {
-        let mut d: RaylibDrawHandle<'_> = rl.begin_drawing(&thread);
+        input_handler.update(&rl);
+        let mut d: RaylibDrawHandle = rl.begin_drawing(&thread);
         d.clear_background(Color::RAYWHITE);
 
         camera_controller.update();
@@ -26,7 +29,8 @@ fn main() {
             d_3d.draw_sphere(Vector3::new(0.0, 3.5, 0.0), 1.0, Color::BLUE);
         }
 
-        d.draw_text("DRIVE", 10, 40, 20, Color::BLACK);
+        //d.draw_text("DRIVE", 10, 40, 20, Color::BLACK);
         d.draw_fps(10, 10);
+        d.draw_text(&format!("Scroll: {}", input_handler.scroll() * 100.0), 10, 40, 20, Color::BLACK);
     }
 }
