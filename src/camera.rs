@@ -3,6 +3,9 @@ use raylib::prelude::*;
 
 pub struct CameraController {
     pub camera: Camera3D,
+    zoom_min: f32,
+    zoom_max: f32,
+    zoom_speed: f32,
 }
 
 impl CameraController {
@@ -15,11 +18,22 @@ impl CameraController {
         );
 
         Self {
-            camera
+            camera,
+            zoom_min: 1.0,
+            zoom_max: 10.0,
+            zoom_speed: 0.1,
         }
     }
 
     pub fn update(&mut self) {
-        
+
+    }
+
+    pub fn zoom(&mut self, delta: f32) {
+        let d: Vector3 = self.camera.position - self.camera.target;  // displacement vector
+        let r: Vector3 = d.normalized();                             // direction vector
+        let mut l: f32 = d.length() + delta * self.zoom_speed;       // new zoom distance
+        l = l.min(self.zoom_max).max(self.zoom_min);                 // clamp zoom distance
+        self.camera.position = self.camera.target + r * l;
     }
 }
