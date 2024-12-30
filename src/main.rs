@@ -16,6 +16,7 @@ fn main() {
     let mut input_handler: input_handler::InputHandler = input_handler::InputHandler::new();
 
     while !rl.window_should_close() {
+        let mouse_pos = rl.get_mouse_position();
         input_handler.update(&rl, &mut camera_controller);
         let mut d: RaylibDrawHandle = rl.begin_drawing(&thread);
         d.clear_background(Color::RAYWHITE);
@@ -28,6 +29,7 @@ fn main() {
         }
 
         //d.draw_text("DRIVE", 10, 40, 20, Color::BLACK);
+        d.draw_text(&format!("Mouse Position: ({:.1}, {:.1})", mouse_pos.x, mouse_pos.y), 10, 40, 20, Color::BLACK);
         d.draw_fps(10, 10);
     }
 }

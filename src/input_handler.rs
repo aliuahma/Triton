@@ -23,7 +23,7 @@ impl InputHandler {
 
         // Camera zoom
         if scroll_delta != 0.0 {
-            camera_controller.zoom(scroll_delta);
+            camera_controller.zoom(scroll_delta, self.current_mouse_position);
         }
 
         // Camera orbit
