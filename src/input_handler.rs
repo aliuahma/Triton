@@ -1,6 +1,6 @@
 // input_handler.rs
 use raylib::prelude::*;
-use crate::camera::CameraController;
+use crate::camera_controller::CameraController;
 
 pub struct InputHandler {
     previous_mouse_position: Vector2, 

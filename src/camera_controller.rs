@@ -37,14 +37,6 @@ impl CameraController {
         }
     }
 
-    // pub fn zoom(&mut self, delta: f32) {
-    //     let d: Vector3 = self.camera.position - self.camera.target;   // displacement vector
-    //     let r: Vector3 = d.normalized();                              // direction vector
-    //     let mut l: f32 = d.length() + delta * self.zoom_sensitivity;  // new zoom distance
-    //     l = l.clamp(self.zoom_min, self.zoom_max);                    // clamp zoom distance
-    //     self.camera.position = self.camera.target + r * l;
-    // }
-
     pub fn zoom(&mut self, delta: f32, mouse_pos: Vector2) {
         // Calculate the normalized device coordinates (NDC)
         let screen_width: f32 = 800.0;
@@ -135,6 +127,7 @@ impl CameraController {
         let r_norm: Vector3 = (self.camera.target - self.camera.position).cross(self.camera.up).normalized();
         let u_norm: Vector3 = self.camera.up.normalized();
 
+        // scale panning because we are using a perspective camera
         let distance: f32 = (self.camera.target - self.camera.position).length();
         let viewport_height: f32 = 2.0 * distance * (self.camera.fovy.to_radians() / 2.0).tan();
         let scale_factor: f32 = distance / viewport_height;

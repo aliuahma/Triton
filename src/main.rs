@@ -1,19 +1,21 @@
 // main.rs
-mod camera;
+mod camera_controller;
 mod input_handler;
 
 use raylib::prelude::*;
+use crate::camera_controller::CameraController;
+use crate::input_handler::InputHandler;
 
 fn main() {
     let (mut rl, thread) = raylib::init()
-        .size(800, 600)
+        .size(1280, 1080)
         .title("DRIVE")
         .build();
 
     rl.set_target_fps(1000);
 
-    let mut camera_controller: camera::CameraController = camera::CameraController::new();
-    let mut input_handler: input_handler::InputHandler = input_handler::InputHandler::new();
+    let mut camera_controller: CameraController = CameraController::new();
+    let mut input_handler: InputHandler = InputHandler::new();
 
     while !rl.window_should_close() {
         let mouse_pos = rl.get_mouse_position();
