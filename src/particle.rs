@@ -1,8 +1,11 @@
+// particle.rs
 use raylib::prelude::*;
 
 pub struct Particle {
     pub position: Vector3,
     pub velocity: Vector3,
+    pub density: f32,
+    pub pressure: f32,
     pub color: Color,
     pub radius: f32,
 }
